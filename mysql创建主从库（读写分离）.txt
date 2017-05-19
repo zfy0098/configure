@@ -78,9 +78,9 @@
 
 			mysql> SHOW MASTER STATUS;
 			+-------------------+----------+--------------+------------------+
-			| File | Position | Binlog_Do_DB | Binlog_Ignore_DB |
+			| File 				| Position | Binlog_Do_DB | Binlog_Ignore_DB |
 			+-------------------+----------+--------------+------------------+
-			| master-bin.000001 | 106 | | |
+			| master-bin.000001 | 106	   |			  |					 |
 			+-------------------+----------+--------------+------------------+
 			1 row in set (0.00 sec)
 
@@ -109,5 +109,34 @@
 		
 	从库建立只读用户：
 	GRANT Select ON *.* TO readonly@'%' IDENTIFIED BY "readonly"
+	
+	
+	
+	
+	示例原目录：/usr/local/mysql/data/
+示例新目录：/data/mysqldata/
+	
+	1，停止mysqld服务
+		/sbin/service mysqld stop
+
+	2，复制数据库到新目录
+		cp -R /usr/local/mysql/data/* /data/mysqldata/
+
+	3，赋于mysql目录权限
+		chown -R mysql:mysql /data/mysqldata/
+
+	4,修改mysql配置文件
+		vim /etc/my.cnf
+		#datadir = /usr/local/mysql/data/
+		datadir = /data/mysqldata/
+
+	5，启动mysqld服务
+		/sbin/service mysqld start
+		用ps -ef |grep mysql 命令查看mysql进程
+		--datadir已经是新目录了
+		
+	如果出现以下类似错误：
+	Starting MySQL.Manager of pid-file quit without updating file
+	请查看以上各步骤是否正确。
 
 
