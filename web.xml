@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <Context path="/web" docBase="/web" crossContext="false" debug="0" reloadable="true"></Context>
+
+
+
+
+配置目录 ${tomcat}/conf/Catalina/localhost/ 目录下
