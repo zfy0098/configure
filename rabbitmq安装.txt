@@ -1,0 +1,40 @@
+./configure  --prefix=/home/server/erlang    --enable-smp-support     --enable-threads  --enable-sctp  --enable-kernel-poll   --enable-hipe  --with-ssl  
+
+ERL_HOME=/home/server/erlang
+export PATH=$ERL_HOME/bin:$PATH  
+export ERL_HOME PATH 
+
+export PATH=$PATH:/usr/erlang/bin
+
+
+ERROR: epmd error for host "77":badarg (unknown POSIX error) 
+解决办法：
+# vi /etc/rabbitmq/rabbitmq-env.conf 
+在文件里面添加这一行：NODENAME=rabbit@localhost，保存
+ (注意：rabbitmq-env.conf这个文件没有，打开之后自动创建)
+
+ 
+http://blog.csdn.net/mx472756841/article/details/50733886
+
+
+http://www.linuxidc.com/Linux/2016-03/129557.htm
+
+./rabbitmq-plugins enable rabbitmq_management
+  
+启动
+./rabbitmq-server -detached
+  
+查看状态
+./rabbitmqctl status
+   
+关闭
+./rabbitmqctl stop
+ 
+ 
+
+添加用户:rabbitmqctl add_user hxb hxb
+
+添加权限:rabbitmqctl set_permissions -p "/" hxb ".*" ".*" ".*"
+
+修改用户角色rabbitmqctl set_user_tags hxb administrator
+ 
