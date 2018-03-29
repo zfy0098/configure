@@ -1,0 +1,30 @@
+schematool -dbType mysql -initSchema
+
+load data local inpath 'wyp.txt' into table wyp;   导入本地文件
+load data [local] inpath '/out6/part-r-00000' into table test;    导入hdfs 文件
+
+创建分区表
+create table merchant_trade_new (merchantno String,tradeamount String , tradecount int ) partitioned by (tradedate String) row format delimited fields terminated by '\t' lines terminated by '\n';
+
+
+导入分区表
+load data inpath '/trxout/part-r-00000' into table merchant_trade_new partition(tradedate='20180321');
+
+
+
+sqoop export --username root --password root  --connect jdbc:mysql://172.16.1.185:3306/test --table merchant_trade --export-dir '/user/hive/warehouse/online.db/merchant_trade_new/tradedate=20180326/part-r-00000' --fields-terminated-by '\t';
+
+
+sqoop export --username root --password root  --connect jdbc:mysql://172.16.1.185:3306/test --table merchant_trade --export-dir '/user/hive/warehouse/online.db/merchant_trade_new/tradedate=20180326/' --fields-terminated-by '\t'
+
+
+sqoop import --username root --password root --connect jdbc:mysql://172.16.1.185:3306/middlepayapp --table tab_pay_order --m 1 --target-dir /app/
+
+
+
+
+
+create table merchant (legalPersonName string  , legalPersonID string  , merchantPersonPhone string  , channelName string  , address struct<installProvince:string , installCity:string , installCounty:string > ) row format delimited fields terminated by '#' collection items terminated by '&';
+
+
+

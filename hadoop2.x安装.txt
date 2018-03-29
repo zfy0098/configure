@@ -1,0 +1,152 @@
+hdfs-site
+
+         <property>    
+				<name>dfs.namenode.secondary.http-address</name>    
+				<value>bogon:9001</value>    
+		</property>    
+		<property>    
+				<name>dfs.namenode.name.dir</name>    
+				<value>file:/home/server/hadoop/hdfs/name</value>   <!--建议先手动建好该目录-->  
+		</property>    
+		<property>    
+				<name>dfs.datanode.data.dir</name>    
+				<value>file:/home/server/hadoop/hdfs/data</value>  <!--建议先手动建好该目录-->  
+		</property>    
+		<property>    
+				<name>dfs.replication</name>    
+				<value>3</value>              <!--副本数目不能大于datanode数目-->    
+		</property>    
+		<property>    
+				<name>dfs.webhdfs.enabled</name>    
+				<value>true</value>    
+		</property>    
+		<property>    
+				<name>dfs.permissions</name>  <!--防止出现不允许远程读写hdfs-->    
+				<value>false</value>    
+		</property>    
+		<property>    
+				<name>dfs.heartbeat.interval</name>   <!--namenode每三秒发一个心跳信号-->    
+				<value>3</value>    
+		</property>    
+		<property>    
+				<name>dfs.namenode.heartbeat.recheck-interval</name>  <!--心跳机制recheck的间隔-->    
+				<value>35000</value>    
+		</property>
+		
+		
+hadoop-env.sh   
+		设置java 环境变量
+			export JAVA_HOME=/home/server/java
+		设置pid 目录
+			export HADOOP_PID_DIR=/home/server/hadoop/tmp/pid
+			export HADOOP_SECURE_DN_PID_DIR=/home/server/hadoop/tmp/pid
+			
+			
+yarn-site.xml
+			
+		<property>  
+				<name>yarn.nodemanager.aux-services</name>  
+				<value>mapreduce_shuffle</value>  
+		</property>  
+		<property>  
+				<name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>  
+				<value>org.apache.hadoop.mapred.ShuffleHandler</value>  
+		</property>  
+		<property>  
+				<name>yarn.resourcemanager.scheduler.address</name>  
+				<value>bogon:8030</value>              
+		</property>  
+		<property>  
+				<name>yarn.resourcemanager.resource-tracker.address</name>  
+				<value>bogon:8031</value>  
+		</property>  
+		<property>  
+				<name>yarn.resourcemanager.address</name>  
+				<value>bogon:8032</value>  
+		</property>  
+		<property>  
+				<name>yarn.resourcemanager.admin.address</name>  
+				<value>bogon:8033</value>  
+		</property>  
+		<property>  
+				<name>yarn.resourcemanager.webapp.address</name>   
+				<value>bogon:8088</value>  
+		</property>
+
+		
+修改yarn-env.sh文件		
+		设置java
+			export JAVA_HOME=/home/server/java
+		
+				
+core-site.xml
+		<property>   
+			<name>fs.default.name</name>   
+			<value>hdfs://172.16.1.185:9000</value>  
+		<!-- hdfs://Master.Hadoop:22-->  
+				<final>true</final>   
+		</property> 
+
+
+		<property>    
+				<name>hadoop.tmp.dir</name>    
+				<value>file:/home/server/hadoop/tmp</value>  <!--建议先手动建好该临时目录-->    
+		</property>  
+
+
+		<property>
+			<name>hadoop.proxyuser.root.hosts</name>
+			<value>*</value>
+		</property>
+		<property>
+			<name>hadoop.proxyuser.root.groups</name>
+			<value>*</value>
+		</property>
+		
+		
+修改mapred-site.xml文件
+
+		
+    <property>    
+          <name>mapreduce.framework.name</name>    
+          <value>yarn</value>    
+    </property>
+		
+
+
+
+修改slaves 添加datanode节点ip 	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
