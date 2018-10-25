@@ -76,50 +76,42 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-tx -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-aspects -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-context-support -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- Spring AOP -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
-
 
 		<!-- spring-web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -132,21 +124,18 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- Spring orm -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-context-support -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>4.3.7.RELEASE</version>
 		</dependency>
 
 		<!-- spring-data-mongodb -->
@@ -356,11 +345,27 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.alipay</groupId>
+			<artifactId>alipay-sdk-java20170307171631</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/META-INF/lib/alipay-sdk-java20170307171631.jar</systemPath>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+
 	</dependencies>
 	<build>
-		<finalName>es-usercenter-provider</finalName>
-		<resources>
-			<!--recources文件夹下的所有文件都打进jar包-->
+
+		<!--<resources>
+			&lt;!&ndash;recources文件夹下的所有文件都打进jar包&ndash;&gt;
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
@@ -370,7 +375,7 @@
 			</resource>
 
 
-			<!-- 上文有说过，由于我的applicationContext.xml文件不是在META-INF下，这一段代码的作用就是将 applicationContext.xml文件拷贝到META-INF目录下-->
+			&lt;!&ndash; 上文有说过，由于我的applicationContext.xml文件不是在META-INF下，这一段代码的作用就是将 applicationContext.xml文件拷贝到META-INF目录下&ndash;&gt;
 			<resource>
 				<targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
 				<directory>src/main/resources/spring</directory>
@@ -383,7 +388,7 @@
 
 		<pluginManagement>
 			<plugins>
-				<!-- 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 -->
+				&lt;!&ndash; 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 &ndash;&gt;
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -442,26 +447,107 @@
 				</executions>
 			</plugin>
 
+		</plugins>-->
+
+		<finalName>es-usercenter-provider</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+
+		<resources>
+			<resource>
+				<!-- 需指定到classes级 否则meta-inf不自动将配置文件打入Jar包 -->
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+					<!--<include>**/*.properties</include>-->
+				</includes>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<plugins>
+
+			<!-- 设置源文件编码方式 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<classesDirectory>target/classes/</classesDirectory>
+					<excludes>
+						<exclude>**/*.properties</exclude>
+					</excludes>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- 拷贝依赖的jar包到lib目录 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/lib
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 解决资源文件的编码问题 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<!-- 过滤后缀为pem、pfx的证书文件 -->
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+						<nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+						<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
+			<!-- 打包source文件为jar文件 -->
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<!--<repository>-->
-			<!--<id>thirdparty</id>-->
-			<!--<url>http://192.168.1.133:8081/nexus/content/repositories/thirdparty</url>-->
-		<!--</repository>-->
 
-		<!--<repository>-->
-			<!--<id>nexus-releases</id>-->
-			<!--<name>Nexus Release Repository</name>-->
-			<!--<url>http://192.168.1.133:8081/nexus/content/repositories/releases/</url>-->
-		<!--</repository>-->
-
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.1.133:8081/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-
-	</distributionManagement>
 </project>
