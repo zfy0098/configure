@@ -8,10 +8,10 @@ yum install openssl-devel
 
 yum install gcc*
 
-ÏÂÔØmaven
+ä¸‹è½½maven
 
 sudo vim /etc/profile
-ÔÚ×îÏÂ·½ÊäÈëÈçÏÂ¶«¶«£¨¸½´ø°ÉjavaµÄ»·¾³±äÁ¿Ò²¸½ÉÏ£©
+åœ¨æœ€ä¸‹æ–¹è¾“å…¥å¦‚ä¸‹ä¸œä¸œï¼ˆé™„å¸¦å§javaçš„ç¯å¢ƒå˜é‡ä¹Ÿé™„ä¸Šï¼‰
 
 export MAVEN_HOME=/home/laomu/workSpace/tools/apache-maven-3.0.5
 export PATH=${PATH}:${MAVEN_HOME}/bin
@@ -20,10 +20,10 @@ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386
 export JRE_HOME=/home/administrator/Java/jdk1.6.0_23/jre
 export CLASSPATH=$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib 
 export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH:$HOME/bin
-:wq ÍÆ³övim£¬source /etc/profile Ë¢ĞÂÏÂ»·¾³±äÁ¿ÅäÖÃ¡£¼´¿ÉÉúĞ§£¬¿ÉÒÔÓÃ mvn -v ½øĞĞ²âÊÔ
+:wq æ¨å‡ºvimï¼Œsource /etc/profile åˆ·æ–°ä¸‹ç¯å¢ƒå˜é‡é…ç½®ã€‚å³å¯ç”Ÿæ•ˆï¼Œå¯ä»¥ç”¨ mvn -v è¿›è¡Œæµ‹è¯•
 
 
-ÏÂÔØ protobuf-2.5.0.tar.gz
+ä¸‹è½½ protobuf-2.5.0.tar.gz
 
 https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
 
@@ -37,3 +37,13 @@ make install
 
 svn checkout http://svn.apache.org/repos/asf/hadoop/common/tags/release-2.3.0
 svn checkout http://svn.apache.org/repos/asf/hadoop/common/tags/release-2.3.0
+
+ä½¿ç”¨å‘½ä»¤ï¼š
+
+mvn clean package â€“Pdist,native â€“DskipTests â€“Dtar
+æˆ–è€…ï¼š
+mvn package -Pdist,native -DskipTests -Dtar
+
+è¿›è¡Œç¼–è¯‘ã€‚ã€€ã€€
+
+ç¼–è¯‘å¥½çš„æ–‡ä»¶åœ¨/hadoop-dist/target/hadoop-2.7.3.tar.gzä¸‹ã€‚
